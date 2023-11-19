@@ -3,12 +3,9 @@ module Parser
 open Combinator
 open AST
 
-let stringOfCharList (chars: char list) : string =
-    chars |> List.toArray |> System.String.Concat
-
 let pNum : Parser<int> =
     pmany1 pdigit
-    |>> (fun digits -> System.Int32.Parse(stringOfCharList digits))
+    |>> (fun digits -> System.Int32.Parse(stringify digits))
     |> (fun p -> p <|> pzero)
 
 let pBpm : Parser<string> =
