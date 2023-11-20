@@ -16,11 +16,29 @@ let pBpm : Parser<string> =
 let pTempo : Parser<Tempo> =
     pseq pNum pBpm (fun (num, _) -> num)
 
-let pNoteType : Parser<NoteType> =
+let pAccidental: Parser<Accidental> =
+    (pchar '#' |>> (fun _ -> Sharp))
+    <|> (pchar 'b' |>> (fun _ -> Flat))
+    <|> (presult Natural)
+let pPitch: Parser<(char*char)> =
+     //Parses the note, octave into a tuple. Ex ('C', 4)
+     //need to include accidentals later and change parser type to Pitch
+    (pseq (pad pletter) pdigit (fun (note, octave) -> (note,octave)))
+
+let pNoteType: Parser<NoteType> =
     //Parses the note, octave and note length into a double tuple. Ex (('C', 4), 2) 
-    pseq (pseq (pad pletter) pdigit (fun (c, x) -> (c,x))) (pad pdigit) (fun (t, y) -> (t,y))
+    pseq pPitch (pad pdigit) (fun (pitch, length) -> (pitch,length))
 
 //let pMeter : Parser<Meter> =
+
+let pMelody : Parser<Melody> =
+    pmany1 (pad pNoteType)
+
+let parseMelody (input: string) =
+    let preparedInput = prepare input
+    match pMelody preparedInput with
+    | Success (melody, _) -> Some melody
+    | Failure _ -> None
 
 let parseTempo (input: string) =
     let preparedInput = prepare input
@@ -28,8 +46,11 @@ let parseTempo (input: string) =
     | Success (tempo, _) -> Some tempo
     | Failure _ -> None
 
+(**
 let parseMeter (input: string) =
     let preparedInput = prepare input
     match pMeter preparedInput with
     | Success (meter, _) -> Some meter
     | Failure _ -> None
+*)
+

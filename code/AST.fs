@@ -4,7 +4,7 @@ type Num = int
 
 type Tempo = Num
 
-type NoteType = Num
+type NoteType = (char * char) * char
 
 type Meter = Num * NoteType
 
@@ -14,15 +14,13 @@ type Pitch = char * Accidental * Num
 
 type Duration = Num
 
-type Note = Pitch * Duration
-
 type Sound = Kick | Snare | HiHat | Crash | Ride | China | Splash
 
 type Percuss = Sound * Num list
 
 type Chord = Pitch list * Duration
 
-type Melody = Note list
+type Melody = NoteType list
 
 type Beat = Percuss list
 
