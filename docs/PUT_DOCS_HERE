@@ -1,0 +1,37 @@
+<num> ::= positive integer
+
+<song> ::= <tempo><meter><melody><beat><chordList>
+
+<tempo> ::= <num> bpm
+
+<meter> ::= <num>/<noteType>
+
+<noteType> ::= 1 | 2 | 4 | 8 | 16 | 32
+
+<melody> ::= <note><melody>
+         | ε
+
+<note> ::= <pitch><duration>
+
+<duration> ::= <num> beats
+
+<pitch> ::= <letter><accidental><octave>
+        | ε
+
+<letter> ::= A | B | C | D | E | F | G
+
+<accidental> ::= # | b | ε
+
+<octave> ::= 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8
+
+<beat> ::= <percuss><beat>
+       | ε
+
+<percuss> ::= <sound>1*<num>
+
+<sound> ::= kick | snare | hi-hat | crash | ride | china | splash
+
+<chordList> ::=  <chord><chordList>
+            | ε
+
+<chord> ::= 3*<pitch><duration>

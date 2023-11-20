@@ -20,6 +20,7 @@ let pAccidental: Parser<Accidental> =
     (pchar '#' |>> (fun _ -> Sharp))
     <|> (pchar 'b' |>> (fun _ -> Flat))
     <|> (presult Natural)
+    
 let pPitch: Parser<(char*char)> =
      //Parses the note, octave into a tuple. Ex ('C', 4)
      //need to include accidentals later and change parser type to Pitch

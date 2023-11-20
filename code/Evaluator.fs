@@ -12,5 +12,5 @@ let evalMelody (melody: Melody): EvalResult =
     |> List.map evalNoteType
     |> String.concat "\n"
 
-let evaluateMusic(melody: Melody): EvalResult =
+let evaluateMusic (melody: Melody): EvalResult =
     evalMelody melody
