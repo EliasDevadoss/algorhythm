@@ -2,6 +2,8 @@ module Evaluator
 
 open AST
 
+//evaluates the melody given by the user
+
 type EvalResult = string
 let evalNoteType (noteType: NoteType): EvalResult =
     let ((note, octave), length) = noteType

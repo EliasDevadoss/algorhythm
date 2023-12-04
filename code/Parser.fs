@@ -3,6 +3,7 @@ module Parser
 open Combinator
 open AST
 
+//Pareses an input between spaces
 let pad p = pbetween pws0 p pws0
 
 let pNum : Parser<int> =

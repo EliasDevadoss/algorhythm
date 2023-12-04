@@ -1,8 +1,6 @@
 open Parser
 open Evaluator
 
-//note for later: \x to represent numbers in hex, File.writeBinary or something similar
-
 let usage() = 
     printfn "Usage: dotnet run <Musical Notation> where Musical Notation is Note (A-G), octave (0-9), and length of note(1, 2, 4, 8, 16, 32)"
     printfn "Example: dotnet run \"C4 2 D4 2 E4 4\""

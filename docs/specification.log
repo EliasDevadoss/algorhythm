@@ -1,9 +1,9 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.22 (TeX Live 2021) (preloaded format=pdflatex 2022.2.7)  20 NOV 2023 18:33
+This is pdfTeX, Version 3.141592653-2.6-1.40.22 (TeX Live 2021) (preloaded format=pdflatex 2022.2.7)  3 DEC 2023 21:51
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
-**docs.tex
-(./docs.tex
+**specification.tex
+(./specification.tex
 LaTeX2e <2020-10-01> patch level 4
 L3 programming layer <2021-02-18>
 (/usr/local/texlive/2021/texmf-dist/tex/latex/base/article.cls
@@ -890,8 +890,9 @@ Package: longtable 2020/01/07 v4.13 Multi-page Table package (DPC)
 \c@lemma=\count347
 \c@observation=\count348
 \c@question=\count349
- (./docs.aux)
-\openout1 = `docs.aux'.
+
+(./specification.aux)
+\openout1 = `specification.aux'.
 
 LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 49.
 LaTeX Font Info:    ... okay on input line 49.
@@ -911,6 +912,7 @@ LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 49.
 LaTeX Font Info:    ... okay on input line 49.
 LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 49.
 LaTeX Font Info:    ... okay on input line 49.
+
 (/usr/local/texlive/2021/texmf-dist/tex/context/base/mkii/supp-pdf.mkii
 [Loading MPS to PDF converter (version 2006.09.02).]
 \scratchcounter=\count350
@@ -941,9 +943,9 @@ Package: gettitlestring 2019/12/15 v1.6 Cleanup title references (HO)
 LaTeX Info: Redefining \ref on input line 49.
 LaTeX Info: Redefining \pageref on input line 49.
 LaTeX Info: Redefining \nameref on input line 49.
- (./docs.out) (./docs.out)
+ (./specification.out) (./specification.out)
 \@outlinefile=\write5
-\openout5 = `docs.out'.
+\openout5 = `specification.out'.
 
 
 *geometry* driver: auto-detecting
@@ -980,32 +982,33 @@ LaTeX Info: Redefining \nameref on input line 49.
 * \@reversemarginfalse
 * (1in=72.27pt=25.4mm, 1cm=28.453pt)
 
-LaTeX Font Info:    Trying to load font information for T1+pcr on input line 57
+LaTeX Font Info:    Trying to load font information for T1+pcr on input line 87
 .
 (/usr/local/texlive/2021/texmf-dist/tex/latex/psnfss/t1pcr.fd
 File: t1pcr.fd 2001/06/04 font definitions for T1/pcr.
 ) [1{/usr/local/texlive/2021/texmf-var/fonts/map/pdftex/updmap/pdftex.map}
 
-] (./docs.aux)
-Package rerunfilecheck Info: File `docs.out' has not changed.
-(rerunfilecheck)             Checksum: ACB3705E5867DCC49F07A877C3475777;184.
+] [2] [3]
+(./specification.aux)
+Package rerunfilecheck Info: File `specification.out' has not changed.
+(rerunfilecheck)             Checksum: C3EE15E1B7D3596E122A484B858C3F8E;798.
  ) 
 Here is how much of TeX's memory you used:
- 30370 strings out of 478994
- 657988 string characters out of 5858185
- 971657 words of memory out of 5000000
- 47388 multiletter control sequences out of 15000+600000
+ 30382 strings out of 478994
+ 658285 string characters out of 5858185
+ 974702 words of memory out of 5000000
+ 47393 multiletter control sequences out of 15000+600000
  415667 words of font info for 37 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 101i,11n,103p,1604b,330s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 101i,12n,103p,1613b,471s stack positions out of 5000i,500n,10000p,200000b,80000s
 {/usr/local/texlive/2021/texmf-dist/fonts/enc/dvips/base/8r.enc}</usr/local/t
 exlive/2021/texmf-dist/fonts/type1/urw/courier/ucrr8a.pfb></usr/local/texlive/2
 021/texmf-dist/fonts/type1/urw/times/utmb8a.pfb></usr/local/texlive/2021/texmf-
 dist/fonts/type1/urw/times/utmr8a.pfb>
-Output written on docs.pdf (1 page, 41709 bytes).
+Output written on specification.pdf (3 pages, 52557 bytes).
 PDF statistics:
- 39 PDF objects out of 1000 (max. 8388607)
- 32 compressed objects within 1 object stream
- 5 named destinations out of 1000 (max. 500000)
- 29 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 69 PDF objects out of 1000 (max. 8388607)
+ 60 compressed objects within 1 object stream
+ 12 named destinations out of 1000 (max. 500000)
+ 69 words of extra memory for PDF output out of 10000 (max. 10000000)
 
