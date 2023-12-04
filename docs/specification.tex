@@ -180,59 +180,86 @@ Our program is represented by the following components:
 \end{verbatim}
 
 
-Syntax: {\tt l}
+Syntax: {\tt song}
 
-Abstract Syntax: {\tt letter} of {\tt char}
+Abstract Syntax: {\tt song} of {\tt int * meter * list note * list percuss * list chord}
 
-Type: {\tt char}
-
-Prec./Assoc.: n/a
-
-Meaning: {\tt l} is a primitive that we represent using the {\tt char} data type. It represents 
-the pitch of a given note.
-
-\vspace{\baselineskip}
-\vspace{\baselineskip}
-
-Syntax: {\tt octave}
-
-Abstract Syntax: {\tt num} of {\tt int}
-
-Type: {\tt int}
+Type: {\tt tuple}
 
 Prec./Assoc.: n/a
 
-Meaning: {\tt octave} is a primitive that we represent using the {\tt int} data type. It 
-represents the octave of a given note.
+Meaning: {\tt song} is a combining form that holds all the necessary data for a song. It 
+combines the tempo, meter, melody, beat, and chords.
 
 \vspace{\baselineskip}
 \vspace{\baselineskip}
 
-Syntax: {\tt duration}
+Syntax: {\tt meter}
 
-Abstract Syntax: {\tt num} of {\tt int}
+Abstract Syntax: {\tt meter} of {\tt int * int}
 
-Type: {\tt int}
+Type: {\tt tuple}
 
 Prec./Assoc.: n/a
 
-Meaning: {\tt duration} is a primitive that we represent using the {\tt int} data type. It 
-represents the number of beats a given note is held out.
+Meaning: {\tt meter} is a combining form that tells the meter of a song, which is which note 
+gets "the beat," and how many beats per measure
 
 \vspace{\baselineskip}
 \vspace{\baselineskip}
 
-Syntax: {\tt lo d}
+Syntax: {\tt note}
 
-Abstract Syntax: {\tt Note} of (({\tt letter} * {\tt num}) * {\tt num})
+Abstract Syntax: {\tt note} of {\tt pitch * int}
 
-Type: {\tt char -> int -> int -> ((char * int) * int)}
+Type: {\tt tuple}
 
 Prec./Assoc.: n/a
 
-Meaning: {\tt Note} is a combining form that represents a note. It consits of a tuple of a 
-tuple of a char and an int, and an int. This represents the notes pitch, octave, and duration, 
-ex. C4 2
+Meaning: {\tt note} is a combining form that gives a certain pitch and tells how long the 
+pitch should be held out for.
+
+\vspace{\baselineskip}
+\vspace{\baselineskip}
+
+Syntax: {\tt pitch}
+
+Abstract Syntax: {\tt pitch} of {\tt char * char * int}
+
+Type: {\tt tuple}
+
+Prec./Assoc.: n/a
+
+Meaning: {\tt pitch} is a combining form that tells which note (C, D, E, etc.), any accidentals, 
+and the octave of the given note. It can also be empty.
+
+\vspace{\baselineskip}
+\vspace{\baselineskip}
+
+Syntax: {\tt percuss}
+
+Abstract Syntax: {\tt percuss} of {\tt string * list int}
+
+Type: {\tt tuple}
+
+Prec./Assoc.: n/a
+
+Meaning: {\tt percuss} is a combining form that dictates a percussive sound, and which beats 
+it should be played on. These form the heart of the beat.
+
+\vspace{\baselineskip}
+\vspace{\baselineskip}
+
+Syntax: {\tt chord}
+
+Abstract Syntax: {\tt chord} of {\tt list pitch * int}
+
+Type: {\tt tuple}
+
+Prec./Assoc.: n/a
+
+Meaning: {\tt chord} is a combining form that dictates the chord pitches, and duration.
+
 
 \vspace{\baselineskip}
 
