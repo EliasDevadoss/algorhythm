@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.25 (TeX Live 2023) (preloaded format=pdflatex 2023.10.1)  10 DEC 2023 21:49
+This is pdfTeX, Version 3.141592653-2.6-1.40.25 (TeX Live 2023) (preloaded format=pdflatex 2023.10.1)  10 DEC 2023 21:57
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -991,17 +991,17 @@ Package rerunfilecheck Info: File `specification.out' has not changed.
 (rerunfilecheck)             Checksum: C3EE15E1B7D3596E122A484B858C3F8E;798.
  ) 
 Here is how much of TeX's memory you used:
- 31401 strings out of 476025
- 692302 string characters out of 5790017
+ 31399 strings out of 476025
+ 692272 string characters out of 5790017
  1870388 words of memory out of 5000000
- 51385 multiletter control sequences out of 15000+600000
+ 51383 multiletter control sequences out of 15000+600000
  524524 words of font info for 42 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  98i,12n,103p,1613b,584s stack positions out of 10000i,1000n,20000p,200000b,200000s
 </usr/local/texlive/2023/texmf-dist/fonts/type1/urw/courier/ucrr8a.pfb></usr/
 local/texlive/2023/texmf-dist/fonts/type1/urw/times/utmb8a.pfb></usr/local/texl
 ive/2023/texmf-dist/fonts/type1/urw/times/utmr8a.pfb>
-Output written on specification.pdf (3 pages, 53767 bytes).
+Output written on specification.pdf (3 pages, 53644 bytes).
 PDF statistics:
  72 PDF objects out of 1000 (max. 8388607)
  60 compressed objects within 1 object stream
