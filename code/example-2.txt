@@ -1,3 +1,3 @@
-4/4, bpm 65
-e 2.75, A3 .25, C4 .25, D4 .25, F4 .25, A3 .25, C4 .5, D4 .5, e .5, D3 1, e .25
-kick 1 1.5, snare 3, crash 1, ride 2 3 4
+65 bpm
+e 2.75, A3 .25, C4 .25, D4 .25, F4 .25, A3 .25, C4 .5, D4 .5, e .5, D3 1, e .25,
+kick 1 1.5, snare 3, crash 1, ride 2 3 4,

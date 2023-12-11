@@ -1,4 +1,4 @@
-4/4, bpm 125
-C4 1, C4 1, G4 1, G4 1, A4 1, A4 1, G4 2
-kick 1, snare 3, hi-hat 1 2 3 4
-C4 E4 G2 2, C4 E4 G2 2, F4 A5 C5 2, C4 E4 G2 2
+125 bpm
+Cn4 1, Cn4 1, Gn4 1, Gn4 1, An4 1, An4 1, Gn4 2,
+1 1, 2 3, 3 1 2 3 4,
+Cn4 En4 Gn2 2, Cn4 En4 Gn2 2, Fn4 An5 Cn5 2, Cn4 En4 Gn2 2,
