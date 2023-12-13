@@ -56,6 +56,7 @@ let addMidiEvent deltaTime eventType note velocity =
     let midiEvent = new MidiEvent(eventType, note, velocity, null) //create midi event
     let midiMessage = new MidiMessage(deltaTime, midiEvent)
     track.Messages.Add(midiMessage)
+    printfn "Added MIDI Event: DeltaTime=%i, EventType=%i, Note=%i, Velocity=%i" deltaTime eventType note velocity
 
 let addNoteToTrack (note:Note) (deltaTime) = 
     let (pitch, length) = note
@@ -75,9 +76,13 @@ let addChordToTrack (chord: Chord) =
     for pitch in pitches do
         let midiNote = pitchToMidiNote pitch
         addMidiEvent 0 MidiEvent.NoteOn (byte midiNote) 0x40uy //set velocity for 64 (0x40) and uy for unsigned byte so range is good for Midi
+        printfn "Added Chord Note On: Note = %i, Velocity = 64" midiNote
     for pitch in pitches do
         let midiNote = pitchToMidiNote pitch
         addMidiEvent duration MidiEvent.NoteOff (byte midiNote) 0x40uy
+        printfn "Added Chord Note Off: Note = %i, Velocity = 64" midiNote
+    
+    
 
 let addChordsToTrack (chords: Chord list) =
     chords
@@ -99,6 +104,7 @@ let setTempo (tempo: Tempo) =
     //bitwise AND with 0xFF to get the last 8 bits
     tempoData.[2] <- byte (microsecondsPerQuarterNote &&& 0xFF)
 
+    printfn "Setting Tempo: %i BPM" tempo
     //create the midi event and message and add it to the track
     let midiEvent = new MidiEvent(MidiMetaType.Tempo, 0uy, 0uy, tempoData)
     let midiMessage = new MidiMessage(0, midiEvent)
@@ -109,6 +115,7 @@ let addEndOfTrackEvent () =
     let endOfTrackEvent = new MidiEvent(MidiMetaType.EndOfTrack, 0uy, 0uy, endOfTrackData)
     let endOfTrackMessage = new MidiMessage(0, endOfTrackEvent)
     track.Messages.Add(endOfTrackMessage)
+    printfn "Added End of Track Event"
 
 let evaluateSong (song: Song) =
     let ((tempo, melody), (percuss, chord)) = song
@@ -121,3 +128,4 @@ let writeMidiToFile (filePath: string) =
     use fileStream = new FileStream(filePath, FileMode.Create)
     let smfWriter = new SmfWriter(fileStream)
     smfWriter.WriteMusic(midiMusic)
+    printfn "MIDI file written to: %s" filePath
