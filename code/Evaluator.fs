@@ -84,7 +84,25 @@ let addChordsToTrack (chords: Chord list) =
     |> List.iter addChordToTrack
 
 let setTempo (tempo: Tempo) =
-    0
+    let microsecondsPerMinute = 60000000
+    let microsecondsPerQuarterNote = microsecondsPerMinute / tempo
+
+    ////need to split the 24-bit integer into 3 bytes with most significant bytes first for the midi and store them in the tempoData array
+    let tempoData = Array.create 3 0uy
+
+    //right shift the 32-bit integer by 16 bits and then bitwise AND with 0xFF to get the first 8 bits
+    tempoData.[0] <- byte ((microsecondsPerQuarterNote >>> 16) &&& 0xFF)
+
+    //right shift the 32-bit integer by 8 bits and then bitwise AND with 0xFF to get the second 8 bits
+    tempoData.[1] <- byte ((microsecondsPerQuarterNote >>> 8) &&& 0xFF)
+
+    //bitwise AND with 0xFF to get the last 8 bits
+    tempoData.[2] <- byte (microsecondsPerQuarterNote &&& 0xFF)
+
+    //create the midi event and message and add it to the track
+    let midiEvent = new MidiEvent(MidiMetaType.Tempo, 0uy, 0uy, tempoData)
+    let midiMessage = new MidiMessage(0, midiEvent)
+    track.Messages.Add(midiMessage)
 
 let addEndOfTrackEvent () =
     let endOfTrackData = Array.empty<byte>
@@ -94,6 +112,7 @@ let addEndOfTrackEvent () =
 
 let evaluateSong (song: Song) =
     let ((tempo, melody), (percuss, chord)) = song
+    setTempo tempo
     addMelodyToTrack melody
     addChordsToTrack chord
     addEndOfTrackEvent()
