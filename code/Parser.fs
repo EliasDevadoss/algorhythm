@@ -23,13 +23,13 @@ let pTempo : Parser<Tempo> =
 
   
 let pPitch: Parser<Pitch> =
-    //Parses the note, octave into a tuple. Ex ('C', 4)
+    //Parses the note, octave into a tuple. Ex (('C', s), 4)
    pseq (pseq (pad pletter) pletter (fun (letter, char) -> (letter, char))) pNum (fun (note, octave) -> (note, octave))
 
 
 let pNote: Parser<Note> =
    //Parses the note, octave and note length into a tripe tuple. Ex ((('C', s), 4), 2)
-   pseq pPitch (pad pNum) (fun (pitch, length) -> (pitch,length))
+   pseq pPitch (pad pNum) (fun (pitch, length) -> (pitch, length))
 
 
 let pMelody : Parser<Melody> =
@@ -44,7 +44,7 @@ let pBeat : Parser<Percuss list> =
    pmany0 (pleft (pad pPercuss) (pstr (",")))
 
 let pChord: Parser<Chord> =
-   pseq (pmany1 pPitch) (pNum) (fun (pitches, duration) -> (pitches, duration))
+   pseq (pmany1 pPitch) (pad pNum) (fun (pitches, duration) -> (pitches, duration))
 
 
 let pChordList: Parser<Chord list> =

@@ -7,6 +7,7 @@ open AST
 
 
 let midiMusic = new MidiMusic()
+//midiMusic.set_Format(byte 0)
 let track = new MidiTrack()
 midiMusic.Tracks.Add(track) //hold midi events in the track
 
@@ -26,7 +27,7 @@ let pitchToMidiNote (pitch: Pitch) =
                         | 's' -> 1
                         | 'b' -> -1
                         | _ -> failwith "Invalid accidental"
-    let octaveNum = (octave) * 12
+    let octaveNum = (octave + 2) * 12
     noteNum + accidentalNum + octaveNum
 
 
@@ -35,6 +36,7 @@ let calculateDuration (length:float) =
     
     let halfNote = quarterNote * 2
     let wholeNote = quarterNote * 4
+    let doubleWholeNote = quarterNote * 8
 
     let eighthNote = quarterNote / 2
     let sixteenthNote = quarterNote / 4
@@ -45,6 +47,7 @@ let calculateDuration (length:float) =
     | 1.0 -> quarterNote
     | 2.0 -> halfNote
     | 4.0 -> wholeNote
+    | 8.0 -> doubleWholeNote
     | 0.5 -> eighthNote
     | 0.25 -> sixteenthNote
     | 0.125 -> thirtySecondNote
@@ -58,18 +61,22 @@ let addMidiEvent deltaTime eventType note velocity =
     track.Messages.Add(midiMessage)
     printfn "Added MIDI Event: DeltaTime=%i, EventType=%i, Note=%i, Velocity=%i" deltaTime eventType note velocity
 
-let addNoteToTrack (note:Note) (deltaTime) = 
+let addNoteToTrack (note:Note) = //(deltaTime) = 
     let (pitch, length) = note
     let midiNote = pitchToMidiNote pitch
     let duration = calculateDuration length
-    addMidiEvent deltaTime MidiEvent.NoteOn (byte midiNote) 0x40uy //set velocity for 64 (0x40) and uy for unsigned byte so range is good for Midi
-    addMidiEvent (duration + deltaTime) MidiEvent.NoteOff (byte midiNote) 0x40uy
-    duration + deltaTime
+    //addMidiEvent deltaTime MidiEvent.NoteOn (byte midiNote) 0x40uy //set velocity for 64 (0x40) and uy for unsigned byte so range is good for Midi
+    //addMidiEvent (duration + deltaTime) MidiEvent.NoteOff (byte midiNote) 0x40uy
+    addMidiEvent 0 MidiEvent.NoteOn (byte midiNote) 0x40uy
+    addMidiEvent duration MidiEvent.NoteOff (byte midiNote) 0x40uy
+    duration // + deltaTime
 
 let addMelodyToTrack (melody: Melody) =
     let mutable totalDeltaTime = 0
     for note in melody do
-        totalDeltaTime <- addNoteToTrack note totalDeltaTime
+        totalDeltaTime <- addNoteToTrack note //totalDeltaTime
+    midiMusic.set_DeltaTimeSpec(int16 totalDeltaTime)
+
 let addChordToTrack (chord: Chord) =
     let (pitches, length) = chord
     let duration = calculateDuration length
@@ -78,11 +85,14 @@ let addChordToTrack (chord: Chord) =
         addMidiEvent 0 MidiEvent.NoteOn (byte midiNote) 0x40uy //set velocity for 64 (0x40) and uy for unsigned byte so range is good for Midi
         printfn "Added Chord Note On: Note = %i, Velocity = 64" midiNote
     for pitch in pitches do
-        let midiNote = pitchToMidiNote pitch
-        addMidiEvent duration MidiEvent.NoteOff (byte midiNote) 0x40uy
-        printfn "Added Chord Note Off: Note = %i, Velocity = 64" midiNote
-    
-    
+        if pitch = pitches[0] then
+            let midiNote = pitchToMidiNote pitch
+            addMidiEvent duration MidiEvent.NoteOff (byte midiNote) 0x40uy
+            printfn "Added Chord Note Off: Note = %i, Velocity = 64" midiNote
+        else
+            let midiNote = pitchToMidiNote pitch
+            addMidiEvent 0 MidiEvent.NoteOff (byte midiNote) 0x40uy
+            printfn "Added Chord Note Off: Note = %i, Velocity = 64" midiNote
 
 let addChordsToTrack (chords: Chord list) =
     chords

@@ -2,8 +2,8 @@ open Parser
 open Evaluator
 
 let usage() = 
-    printfn "Usage: dotnet run <Musical Composition file>"
-    printfn "Example: dotnet run <music_file.txt>"
+    printfn "Usage: dotnet run \"Musical Composition file\""
+    printfn "Example: dotnet run \"music_file.txt\""
 
 [<EntryPoint>]
 let main (argv: string array) =
@@ -20,7 +20,8 @@ let main (argv: string array) =
                 printfn "Generating MIDI file..."
                 evaluateSong song
 
-                let outputFile = sprintf "%s.midi" filename
+                let newFilename = filename.Substring(0, (String.length (filename) - 4))
+                let outputFile = sprintf "%s.midi" newFilename
                 writeMidiToFile outputFile
                 printfn "Your MIDI file is generated: %s" outputFile
                 0

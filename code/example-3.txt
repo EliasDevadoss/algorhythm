@@ -1,4 +1,4 @@
 60 bpm
-e 13, D5 1, Bb 1, G 1,
+Cn1 4, Dn5 1, Bb4 1, Gn4 1,
 
-G4 Bb4 D5 A6 8, D4 G4 A4 8, A4 C4 E4 G4 B5 8,
+Gn4 Bb4 Dn5 An5 8, Dn4 Gn4 An4 8, An3 Cn4 En4 Gn4 Bn4 8,
