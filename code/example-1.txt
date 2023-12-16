@@ -1,4 +1,4 @@
 125 bpm
 Cn4 1, Cn4 1, Gn4 1, Gn4 1, An4 1, An4 1, Gn4 2,
 1 1, 2 3, 3 1 2 3 4,
-Cn4 En4 Gn4 2, Cn4 En4 Gn4 2, Fn4 An4 Cn5 2, Cn4 En4 Gn4 2,
+Cn4 En4 Gn4 2, Cn4 En4 Gn4 2, Cn4 Fn4 An4 2, Cn4 En4 Gn4 2,
