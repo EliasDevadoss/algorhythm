@@ -33,10 +33,10 @@ let pitchToMidiNote (pitch: Pitch) =
     noteNum + accidentalNum + octaveNum
 
 
-let calculateDuration (length:float) = 
-    let quarterNote = 480 //midi ticks
+let calculateDuration (length:float) tempo = 
+    let quarterNote = (float) 57600 / tempo
     match length with
-    | x -> int (float (quarterNote) * x)
+    | x -> int (quarterNote * x)
     | _ -> failwith "Invalid length"
 
 
@@ -46,23 +46,23 @@ let addMidiEvent deltaTime eventType note velocity (track: MidiTrack) =
     track.Messages.Add(midiMessage)
     printfn "Added MIDI Event: DeltaTime=%i, EventType=%i, Note=%i, Velocity=%i" deltaTime eventType note velocity
 
-let addNoteToTrack (note: Note) start = //(deltaTime) = 
+let addNoteToTrack (note: Note) start tempo = //(deltaTime) = 
     let (pitch, length) = note
     let midiNote = pitchToMidiNote pitch
-    let duration = calculateDuration length
+    let duration = calculateDuration length tempo
     addMidiEvent start MidiEvent.NoteOn (byte midiNote) 0x40uy track1
     addMidiEvent duration MidiEvent.NoteOff (byte midiNote) 0x40uy track1
     duration
 
-let addMelodyToTrack (melody: Melody) =
-    let fNote: Note = ((('C', 'n'), 0), 1)
-    addNoteToTrack fNote 480 |> ignore
+let addMelodyToTrack (melody: Melody) tempo =
+    //let fNote: Note = ((('C', 'n'), 0), 1)
+    //addNoteToTrack fNote 0 tempo |> ignore
     for note in melody do
-        addNoteToTrack note 0 |> ignore
+        addNoteToTrack note 0 tempo |> ignore
 
-let addChordToTrack (chord: Chord) =
+let addChordToTrack (chord: Chord) tempo =
     let (pitches, length) = chord
-    let duration = calculateDuration length
+    let duration = calculateDuration length tempo
     for pitch in pitches do
         let midiNote = pitchToMidiNote pitch
         addMidiEvent 0 MidiEvent.NoteOn (byte midiNote) 0x40uy track1 //set velocity for 64 (0x40) and uy for unsigned byte so range is good for Midi
@@ -77,32 +77,9 @@ let addChordToTrack (chord: Chord) =
             addMidiEvent 0 MidiEvent.NoteOff (byte midiNote) 0x40uy track1
             printfn "Added Chord Note Off: Note = %i, Velocity = 64" midiNote
 
-let addChordsToTrack (chords: Chord list) =
-    chords
-    |> List.iter addChordToTrack
-
-let setTempo (tempo: Tempo) =
-    let microsecondsPerMinute = 60000000
-    let microsecondsPerQuarterNote = microsecondsPerMinute / tempo
-
-    ////need to split the 24-bit integer into 3 bytes with most significant bytes first for the midi and store them in the tempoData array
-    let tempoData = Array.create 3 0uy
-
-    //right shift the 32-bit integer by 16 bits and then bitwise AND with 0xFF to get the first 8 bits
-    tempoData.[0] <- byte ((microsecondsPerQuarterNote >>> 16) &&& 0xFF)
-
-    //right shift the 32-bit integer by 8 bits and then bitwise AND with 0xFF to get the second 8 bits
-    tempoData.[1] <- byte ((microsecondsPerQuarterNote >>> 8) &&& 0xFF)
-
-    //bitwise AND with 0xFF to get the last 8 bits
-    tempoData.[2] <- byte (microsecondsPerQuarterNote &&& 0xFF)
-
-    printfn "Setting Tempo: %i BPM" tempo
-    //create the midi event and message and add it to the track
-    let midiEvent = new MidiEvent(MidiMetaType.Tempo, 0uy, 0uy, tempoData)
-    let midiMessage = new MidiMessage(0, midiEvent)
-    track1.Messages.Add(midiMessage)
-    track2.Messages.Add(midiMessage)
+let addChordsToTrack (chords: Chord list) tempo =
+    for chord in chords do
+        addChordToTrack chord tempo
 
 let addEndOfTrackEvent () =
     let endOfTrackData = Array.empty<byte>
@@ -114,10 +91,9 @@ let addEndOfTrackEvent () =
 
 let evaluateSong (song: Song) =
     let ((tempo, melody), (percuss, chord)) = song
-    midiMusic.set_DeltaTimeSpec(int16 (calculateDuration 1))
-    setTempo tempo
-    addMelodyToTrack melody
-    addChordsToTrack chord
+    midiMusic.set_DeltaTimeSpec(int16 (calculateDuration 1 tempo))
+    addMelodyToTrack melody tempo
+    addChordsToTrack chord tempo
     addEndOfTrackEvent()
 
 let writeMidiToFile (filePath: string) =
