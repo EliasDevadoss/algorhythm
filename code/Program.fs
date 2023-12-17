@@ -20,9 +20,13 @@ let main (argv: string array) =
                 printfn "Generating MIDI file..."
                 evaluateSong song
 
-                let newFilename = filename.Substring(0, (String.length (filename) - 4))
+                let newName = filename.Substring(0, (String.length (filename) - 4))
+                let newFilename2 = newName + "_Chords"
+                let newFilename = newName + "_Melody"
                 let outputFile = sprintf "%s.midi" newFilename
-                writeMidiToFile outputFile
+                let outputFile2 = sprintf "%s.midi" newFilename2
+                writeMidiToFile outputFile 1
+                writeMidiToFile outputFile2 2
                 printfn "Your MIDI file is generated: %s" outputFile
                 0
             | None ->

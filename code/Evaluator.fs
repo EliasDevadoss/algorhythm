@@ -7,11 +7,13 @@ open AST
 
 
 let midiMusic = new MidiMusic()
+let midiMusic2 = new MidiMusic()
 midiMusic.set_Format(byte 1)
+midiMusic2.set_Format(byte 1)
 let track1 = new MidiTrack()
 let track2 = new MidiTrack()
 midiMusic.Tracks.Add(track1) //hold midi events in the track
-midiMusic.Tracks.Add(track2)
+midiMusic2.Tracks.Add(track2)
 
 let pitchToMidiNote (pitch: Pitch) = 
     let ((note, accidental), octave) = pitch
@@ -74,16 +76,16 @@ let addChordToTrack (chord: Chord) tempo =
     let duration = calculateDuration length tempo
     for pitch in pitches do
         let midiNote = pitchToMidiNote pitch
-        addMidiEvent 0 MidiEvent.NoteOn (byte midiNote) 0x40uy track1 //set velocity for 64 (0x40) and uy for unsigned byte so range is good for Midi
+        addMidiEvent 0 MidiEvent.NoteOn (byte midiNote) 0x40uy track2 //set velocity for 64 (0x40) and uy for unsigned byte so range is good for Midi
         printfn "Added Chord Note On: Note = %i, Velocity = 64" midiNote
     for pitch in pitches do
         if pitch = pitches[0] then
             let midiNote = pitchToMidiNote pitch
-            addMidiEvent duration MidiEvent.NoteOff (byte midiNote) 0x40uy track1
+            addMidiEvent duration MidiEvent.NoteOff (byte midiNote) 0x40uy track2
             printfn "Added Chord Note Off: Note = %i, Velocity = 64" midiNote
         else
             let midiNote = pitchToMidiNote pitch
-            addMidiEvent 0 MidiEvent.NoteOff (byte midiNote) 0x40uy track1
+            addMidiEvent 0 MidiEvent.NoteOff (byte midiNote) 0x40uy track2
             printfn "Added Chord Note Off: Note = %i, Velocity = 64" midiNote
 
 let addChordsToTrack (chords: Chord list) tempo =
@@ -96,17 +98,21 @@ let addEndOfTrackEvent () =
     let endOfTrackMessage = new MidiMessage(0, endOfTrackEvent)
     track1.Messages.Add(endOfTrackMessage)
     track2.Messages.Add(endOfTrackMessage)
-    printfn "Added End of Track Event"
+    printfn "Added End of Track Events"
 
 let evaluateSong (song: Song) =
     let ((tempo, melody), (percuss, chord)) = song
     midiMusic.set_DeltaTimeSpec(int16 (calculateDuration 1 tempo))
+    midiMusic2.set_DeltaTimeSpec(int16 (calculateDuration 1 tempo))
     addMelodyToTrack melody tempo
     addChordsToTrack chord tempo
     addEndOfTrackEvent()
 
-let writeMidiToFile (filePath: string) =
+let writeMidiToFile (filePath: string) num =
     use fileStream = new FileStream(filePath, FileMode.Create)
     let smfWriter = new SmfWriter(fileStream)
-    smfWriter.WriteMusic(midiMusic)
+    if (num = 1) then
+        smfWriter.WriteMusic(midiMusic)
+    if (num = 2) then
+        smfWriter.WriteMusic(midiMusic2)
     printfn "MIDI file written to: %s" filePath
