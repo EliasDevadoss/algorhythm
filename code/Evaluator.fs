@@ -37,7 +37,7 @@ let calculateDuration (length:float) tempo =
     let quarterNote = (float) 57600 / tempo
     match length with
     | x -> int (quarterNote * x)
-    | _ -> failwith "Invalid length"
+    //| _ -> failwith "Invalid length"
 
 
 let addMidiEvent deltaTime eventType note velocity (track: MidiTrack) =
@@ -46,19 +46,28 @@ let addMidiEvent deltaTime eventType note velocity (track: MidiTrack) =
     track.Messages.Add(midiMessage)
     printfn "Added MIDI Event: DeltaTime=%i, EventType=%i, Note=%i, Velocity=%i" deltaTime eventType note velocity
 
-let addNoteToTrack (note: Note) start tempo = //(deltaTime) = 
+let addNoteToTrack (note: Note) start tempo rest = //(deltaTime) = 
     let (pitch, length) = note
-    let midiNote = pitchToMidiNote pitch
     let duration = calculateDuration length tempo
+    let midiNote = pitchToMidiNote pitch
     addMidiEvent start MidiEvent.NoteOn (byte midiNote) 0x40uy track1
     addMidiEvent duration MidiEvent.NoteOff (byte midiNote) 0x40uy track1
     duration
 
 let addMelodyToTrack (melody: Melody) tempo =
-    //let fNote: Note = ((('C', 'n'), 0), 1)
-    //addNoteToTrack fNote 0 tempo |> ignore
+//cannot have two consecutive
+    let mutable temp = 0
     for note in melody do
-        addNoteToTrack note 0 tempo |> ignore
+        let (((thisNote, accidental), octave), length) = note
+        if (thisNote = 'r') then
+            temp <- calculateDuration length tempo
+            printfn "New temp %A" (calculateDuration length tempo)
+        else
+            if (temp <> 0) then
+                addNoteToTrack note temp tempo true |> ignore
+                temp <- 0
+            else
+                addNoteToTrack note 0 tempo false |> ignore
 
 let addChordToTrack (chord: Chord) tempo =
     let (pitches, length) = chord
