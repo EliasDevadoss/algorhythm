@@ -7,4 +7,3 @@ specification.pdf: specification.tex
 
 clean:
 	@rm -f *.out *.log *.bbl *.aux
-

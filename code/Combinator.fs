@@ -548,3 +548,4 @@ let diagnosticMessage(window_sz: int)(failure_pos: int)(buffer: string)(err: str
     let diag = err + "\n\n" + window + "\n" + (leftpad "^" ' ' (caret_pos - 1)) + "\n"
 
     diag
+

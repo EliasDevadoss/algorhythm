@@ -43,7 +43,6 @@ let addMidiEvent deltaTime eventType note velocity (track: MidiTrack) =
     let midiEvent = new MidiEvent(eventType, note, velocity, null) //create midi event
     let midiMessage = new MidiMessage(deltaTime, midiEvent)
     track.Messages.Add(midiMessage)
-    printfn "Added MIDI Event: DeltaTime=%i, EventType=%i, Note=%i, Velocity=%i" deltaTime eventType note velocity
 
 let addNoteToTrack (note: Note) start tempo rest = //(deltaTime) = 
     let (pitch, length) = note
@@ -73,16 +72,13 @@ let addChordToTrack (chord: Chord) tempo =
     for pitch in pitches do
         let midiNote = pitchToMidiNote pitch
         addMidiEvent 0 MidiEvent.NoteOn (byte midiNote) 0x40uy track2 //set velocity for 64 (0x40) and uy for unsigned byte so range is good for Midi
-        printfn "Added Chord Note On: Note = %i, Velocity = 64" midiNote
     for pitch in pitches do
         if pitch = pitches[0] then
             let midiNote = pitchToMidiNote pitch
             addMidiEvent duration MidiEvent.NoteOff (byte midiNote) 0x40uy track2
-            printfn "Added Chord Note Off: Note = %i, Velocity = 64" midiNote
         else
             let midiNote = pitchToMidiNote pitch
             addMidiEvent 0 MidiEvent.NoteOff (byte midiNote) 0x40uy track2
-            printfn "Added Chord Note Off: Note = %i, Velocity = 64" midiNote
 
 let addChordsToTrack (chords: Chord list) tempo =
     for chord in chords do
@@ -94,7 +90,6 @@ let addEndOfTrackEvent () =
     let endOfTrackMessage = new MidiMessage(0, endOfTrackEvent)
     track1.Messages.Add(endOfTrackMessage)
     track2.Messages.Add(endOfTrackMessage)
-    printfn "Added End of Track Events"
 
 let evaluateSong (song: Song) =
     let ((tempo, melody), (percuss, chord)) = song
@@ -112,3 +107,4 @@ let writeMidiToFile (filePath: string) num =
     if (num = 2) then
         smfWriter.WriteMusic(midiMusic2)
     printfn "MIDI file written to: %s" filePath
+    
