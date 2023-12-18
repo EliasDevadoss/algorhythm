@@ -5,6 +5,8 @@ VisualStudioVersion = 17.0.31903.59
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "code", "code\code.fsproj", "{F3F44629-BF41-446C-BCE4-881773B701ED}"
 EndProject
+Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "algoTest", "algoTest\algoTest.fsproj", "{83501B20-2CAE-41D6-9EF4-B6E24BACE24D}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -18,5 +20,9 @@ Global
 		{F3F44629-BF41-446C-BCE4-881773B701ED}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F3F44629-BF41-446C-BCE4-881773B701ED}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F3F44629-BF41-446C-BCE4-881773B701ED}.Release|Any CPU.Build.0 = Release|Any CPU
+		{83501B20-2CAE-41D6-9EF4-B6E24BACE24D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{83501B20-2CAE-41D6-9EF4-B6E24BACE24D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{83501B20-2CAE-41D6-9EF4-B6E24BACE24D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{83501B20-2CAE-41D6-9EF4-B6E24BACE24D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
