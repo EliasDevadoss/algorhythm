@@ -1,17 +1,28 @@
 namespace algoTest
 
-open System
 open Microsoft.VisualStudio.TestTools.UnitTesting
 open Parser
 open Evaluator
-open AST
+open Combinator
 
 [<TestClass>]
 type TestClass () =
 
-    [<TestMethod>]
-    member this.TestpNote () =
-        let input = "C#4 2"
-        let expected =  ((('C', '#'), 4), 2)
-        let actual = pNote input
-        Assert.AreEqual(expected, actual)
+    [<TestMethod>] //Parser test
+    member this.TestpPitch () =
+        let input = "120 bpm"
+        let expected = 120
+        let preparedInput = prepare input
+        let actual = pTempo preparedInput
+        match actual with
+        | Success (result, _) -> 
+            Assert.AreEqual(expected, result)
+        | Failure _ ->
+            Assert.IsTrue(false)
+     
+    [<TestMethod>] //Interpreter test
+    member this.TestPitchToMidiNote () =
+        let input = (('C', 'n'), 4) //middle C
+        let expected = 72
+        let actualMidiNote = pitchToMidiNote input
+        Assert.AreEqual(expected, actualMidiNote)
