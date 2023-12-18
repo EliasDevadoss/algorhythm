@@ -1,10 +1,7 @@
 module Evaluator
 open System.IO
 open Commons.Music.Midi
-
 open AST
-
-
 
 let midiMusic = new MidiMusic()
 let midiMusic2 = new MidiMusic()
@@ -63,7 +60,6 @@ let addMelodyToTrack (melody: Melody) tempo =
         let (((thisNote, accidental), octave), length) = note
         if (thisNote = 'r') then
             temp <- calculateDuration length tempo
-            printfn "New temp %A" (calculateDuration length tempo)
         else
             if (temp <> 0) then
                 addNoteToTrack note temp tempo true |> ignore

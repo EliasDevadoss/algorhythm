@@ -4,10 +4,6 @@ type Num = int
 
 type Tempo = Num
 
-//type NoteType = Num
-
-//type Meter = Num * NoteType
-
 type Pitch = (char * char) * Num
 
 type Duration = Num
